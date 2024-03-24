@@ -1,0 +1,42 @@
+# networks:
+#   framework_api_network:
+
+# volumes:
+#   framework_api_db:
+
+services:
+
+  api:
+    container_name: framework_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node/framework_api
+    # networks:
+    #   - framework_api_network
+
+  # db:
+  #   container_name: mariadb-database
+  #   image: mariadb:11.2.3-jammy
+  #   restart: always
+  #   volumes:
+  #     - document_signature_db:/var/lib/mysql:Z
+  #     - .docker/mariadb:/docker-entrypoint-initdb.d
+  #   networks:
+  #     - document_signature_api_network
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: root
+
+  # db_viewer:
+  #   container_name: phpmyadmin
+  #   image: phpmyadmin:latest
+  #   restart: always
+  #   ports:
+  #     - 8081:80
+  #   environment:
+  #     - PMA_ARBITRARY=1
+  #   networks:
+  #     - document_signature_api_network

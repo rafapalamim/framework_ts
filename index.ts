@@ -1,7 +1,7 @@
 import ExampleController from './app/ExampleModule/ExampleController'
-import ExpressHttpAdapter from './framework/Server/HttpAdapters/ExpressHttpAdapter'
+import ExpressHttpServerAdapter from './framework/Server/HttpAdapters/ExpressHttpServerAdapter'
 
-const app = new ExpressHttpAdapter()
+const app = new ExpressHttpServerAdapter()
 const exampleController = new ExampleController()
 exampleController.register(app)
 

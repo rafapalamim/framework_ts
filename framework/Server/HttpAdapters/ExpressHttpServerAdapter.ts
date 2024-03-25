@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express'
 import ExpressRequest from './ExpressRequest'
 import ExpressResponse from './ExpressResponse'
 
-export default class ExpressHttpAdapter implements HttpServer {
+export default class ExpressHttpServerAdapter implements HttpServer {
 
     private readonly app
 

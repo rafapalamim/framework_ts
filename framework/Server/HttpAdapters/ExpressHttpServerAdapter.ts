@@ -1,7 +1,7 @@
 import HttpServer, { MethodType } from '../HttpServer'
 import express, { Request, Response } from 'express'
-import ExpressRequest from './ExpressRequest'
-import ExpressResponse from './ExpressResponse'
+import ExpressRequestAdapter from './ExpressRequestAdapter'
+import ExpressResponseAdapter from './ExpressResponseAdapter'
 
 export default class ExpressHttpServerAdapter implements HttpServer {
 
@@ -14,7 +14,7 @@ export default class ExpressHttpServerAdapter implements HttpServer {
     }
 
     addRoute(method: MethodType, url: string, callback: CallableFunction): void {
-        this.app[method](url, (request: Request, response: Response) => callback(new ExpressRequest(request), new ExpressResponse(response)))
+        this.app[method](url, (request: Request, response: Response) => callback(new ExpressRequestAdapter(request), new ExpressResponseAdapter(response)))
     }
 
     listen(port: number): void {

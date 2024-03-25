@@ -1,7 +1,7 @@
 import { Response } from 'express'
 import HttpResponse from '../HttpResponse'
 
-export default class ExpressResponse implements HttpResponse {
+export default class ExpressResponseAdapter implements HttpResponse {
 
     constructor(private readonly response: Response) { }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn tsc",
     "test": "yarn jest --watch",
-    "dev:run": "yarn tsx ./index.ts"
+    "dev:run": "yarn tsx watch ./index.ts"
   },
   "dependencies": {
     "commander": "^12.0.0",

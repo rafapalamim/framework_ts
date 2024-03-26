@@ -1,8 +1,10 @@
-# networks:
-#   framework_api_network:
+networks:
+  fw_network:
 
-# volumes:
-#   framework_api_db:
+volumes:
+  # fw_pgsql_data:
+  fw_prometheus_data:
+  fw_grafana_data:
 
 services:
 
@@ -15,28 +17,37 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/framework_api
-    # networks:
-    #   - framework_api_network
+    networks:
+      - fw_network
 
   # db:
   #   container_name: mariadb-database
   #   image: mariadb:11.2.3-jammy
   #   restart: always
   #   volumes:
-  #     - document_signature_db:/var/lib/mysql:Z
+  #     - fw_pgsql_data:/var/lib/mysql:Z
   #     - .docker/mariadb:/docker-entrypoint-initdb.d
   #   networks:
-  #     - document_signature_api_network
+  #     - fw_network
   #   environment:
   #     MARIADB_ROOT_PASSWORD: root
 
-  # db_viewer:
-  #   container_name: phpmyadmin
-  #   image: phpmyadmin:latest
-  #   restart: always
-  #   ports:
-  #     - 8081:80
-  #   environment:
-  #     - PMA_ARBITRARY=1
-  #   networks:
-  #     - document_signature_api_network
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - fw_prometheus_data:/prometheus
+    networks:
+      - fw_network
+
+  grafana:
+    image: grafana/grafana:10.1.9-ubuntu
+    container_name: grafana
+    ports:
+      - 9091:3000
+    volumes:
+      - fw_grafana_data:/var/lib/grafana
+    networks:
+      - fw_network

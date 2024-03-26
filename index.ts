@@ -1,5 +1,5 @@
 import ExampleController from './app/ExampleModule/ExampleController'
-import ExpressHttpServerAdapter from './framework/Server/HttpAdapters/ExpressHttpServerAdapter'
+import ExpressHttpServerAdapter from './framework/Server/Adapters/ExpressHttpServerAdapter'
 
 const app = new ExpressHttpServerAdapter()
 const exampleController = new ExampleController()

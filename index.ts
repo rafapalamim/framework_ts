@@ -1,14 +1,14 @@
 import PrometheusController from './@framework/Observability/Prometheus/PrometheusController'
 import ExpressHttpServerAdapter from './@framework/Server/Adapters/Express/ExpressHttpServerAdapter'
-import PrometheusCollectRequestDurationEnd from './@framework/Observability/Prometheus/Middlewares/PrometheusCollectRequestDurationEnd'
-import PrometheusCollectRequestDurationInit from './@framework/Observability/Prometheus/Middlewares/PrometheusCollectRequestDurationInit'
+import PrometheusCollectRequestDuration from './@framework/Observability/Prometheus/Middlewares/PrometheusCollectRequestDuration'
 import HttpServerBuilder from './@framework/Server/Builder/HttpServerBuilder'
 import ExampleController from './src/ExampleModule/ExampleController'
+import StartRequestTime from './@framework/Server/Middlewares/StartRequestTime'
 
 const appBuilder = new HttpServerBuilder(new ExpressHttpServerAdapter())
-appBuilder.addObservabilityMiddlewares(new PrometheusCollectRequestDurationInit())
+appBuilder.addMiddlewares([new StartRequestTime()])
 appBuilder.addRoutes([new ExampleController(), new PrometheusController()])
-appBuilder.addObservabilityMiddlewares(new PrometheusCollectRequestDurationEnd())
+appBuilder.addObservabilityMiddlewares(new PrometheusCollectRequestDuration())
 
 const app = appBuilder.build()
 

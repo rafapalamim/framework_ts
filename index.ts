@@ -1,8 +1,8 @@
 import PrometheusController from './@framework/Observability/Prometheus/PrometheusController'
 import ExpressHttpServerAdapter from './@framework/Server/Adapters/Express/ExpressHttpServerAdapter'
-import PrometheusCollectRequestDurationEnd from './@framework/Server/Adapters/Express/Observability/PrometheusCollectRequestDurationEnd'
-import PrometheusCollectRequestDurationInit from './@framework/Server/Adapters/Express/Observability/PrometheusCollectRequestDurationInit'
-import HttpServerBuilder from './@framework/Server/HttpServerBuilder'
+import PrometheusCollectRequestDurationEnd from './@framework/Observability/Prometheus/Middlewares/PrometheusCollectRequestDurationEnd'
+import PrometheusCollectRequestDurationInit from './@framework/Observability/Prometheus/Middlewares/PrometheusCollectRequestDurationInit'
+import HttpServerBuilder from './@framework/Server/Builder/HttpServerBuilder'
 import ExampleController from './src/ExampleModule/ExampleController'
 
 const appBuilder = new HttpServerBuilder(new ExpressHttpServerAdapter())

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import HttpServer from '../../../HttpServer'
-import HttpObservabilityMiddleware from '../../../../Observability/HttpObservabilityMiddleware'
+import HttpServer from '../../../Server/HttpServer'
+import HttpObservabilityMiddleware from '../../HttpObservabilityMiddleware'
 
 export default class PrometheusCollectRequestDurationInit implements HttpObservabilityMiddleware {
 

@@ -5,12 +5,12 @@ export default class ExpressResponseAdapter implements HttpResponse {
 
     constructor(private readonly response: Response) { }
 
-    set(key: string, value: string): this {
+    setHeader(key: string, value: string): this {
         this.response.set(key, value)
         return this
     }
 
-    status(code: number): this {
+    setStatusCode(code: number): this {
         this.response.status(code)
         return this
     }
@@ -23,8 +23,7 @@ export default class ExpressResponseAdapter implements HttpResponse {
         this.response.json(json)
     }
 
-    end(data: unknown): void {
-        this.response.end(data)
+    get statusCode(): number {
+        return this.response.statusCode
     }
-
 }

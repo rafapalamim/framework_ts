@@ -15,7 +15,12 @@ export default class ExpressHttpServerAdapter implements HttpServer {
     }
 
     registerMiddleware(middlewareFunction: RequestHandler): void {
-        this.app.use(middlewareFunction)
+        this.app.use((request: Request, response: Response, next: NextFunction) => { 
+            const newRequest = new ExpressRequestAdapter(request) as unknown as Request
+            const newResponse = new ExpressResponseAdapter(response) as unknown as Response
+            const newNext = new ExpressNextFunctionAdapter(next) as unknown as NextFunction
+            middlewareFunction(newRequest, newResponse, newNext)
+        })
     }
 
     registerRoute(method: MethodType, url: string, callback: CallableFunction): void {

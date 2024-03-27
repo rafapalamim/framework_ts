@@ -2,6 +2,7 @@ import HttpServer, { MethodType } from '../../HttpServer'
 import express, { NextFunction, Request, RequestHandler, Response } from 'express'
 import ExpressRequestAdapter from './ExpressRequestAdapter'
 import ExpressResponseAdapter from './ExpressResponseAdapter'
+import ExpressNextFunctionAdapter from './ExpressNextFunctionAdapter'
 
 export default class ExpressHttpServerAdapter implements HttpServer {
 
@@ -21,7 +22,7 @@ export default class ExpressHttpServerAdapter implements HttpServer {
         this.app[method](url, (request: Request, response: Response, next: NextFunction) => callback(
             new ExpressRequestAdapter(request),
             new ExpressResponseAdapter(response),
-            next
+            new ExpressNextFunctionAdapter(next)
         ))
     }
 

@@ -1,8 +1,8 @@
 import { NextFunction } from 'express'
-import Controller from '../../framework/Controller/Controller'
-import HttpRequest from '../../framework/Server/HttpRequest'
-import HttpResponse from '../../framework/Server/HttpResponse'
-import HttpServer from '../../framework/Server/HttpServer'
+import Controller from '../../@framework/Controller/Controller'
+import HttpRequest from '../../@framework/Server/HttpRequest'
+import HttpResponse from '../../@framework/Server/HttpResponse'
+import HttpServer from '../../@framework/Server/HttpServer'
 
 export default class ExampleController implements Controller {
 

@@ -20,6 +20,14 @@ export default class ExpressRequestAdapter<R, Q> implements HttpRequest<R, Q> {
         return this.request.query
     }
 
+    get route(): string | null {
+        return this.request.route ? this.request.route.path : null
+    }
+
+    get requestedUrl(): string {
+        return this.request.originalUrl
+    }
+
     get currentUser(): unknown {
         return this.request.currentUser
     }

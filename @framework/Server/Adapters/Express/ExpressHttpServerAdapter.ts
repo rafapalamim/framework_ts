@@ -1,8 +1,9 @@
 import HttpServer, { MethodType } from '../../HttpServer'
-import express, { NextFunction, Request, RequestHandler, Response } from 'express'
+import express, { ErrorRequestHandler, NextFunction, Request, RequestHandler, Response } from 'express'
 import ExpressRequestAdapter from './ExpressRequestAdapter'
 import ExpressResponseAdapter from './ExpressResponseAdapter'
 import ExpressNextFunctionAdapter from './ExpressNextFunctionAdapter'
+import ExpressErrorAdapter from './ExpressErrorAdapter'
 
 export default class ExpressHttpServerAdapter implements HttpServer {
 
@@ -20,6 +21,17 @@ export default class ExpressHttpServerAdapter implements HttpServer {
             const newResponse = new ExpressResponseAdapter(response) as unknown as Response
             const newNext = new ExpressNextFunctionAdapter(next) as unknown as NextFunction
             middlewareFunction(newRequest, newResponse, newNext)
+        })
+    }
+
+    registerErrorMiddleware(middlewareFunction: ErrorRequestHandler): void {        
+        this.app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
+            const newError = new ExpressErrorAdapter(err) as unknown as Error
+            const newRequest = new ExpressRequestAdapter(request) as unknown as Request
+            const newResponse = new ExpressResponseAdapter(response) as unknown as Response
+            const newNext = new ExpressNextFunctionAdapter(next) as unknown as NextFunction
+
+            middlewareFunction(newError, newRequest, newResponse, newNext)
         })
     }
 

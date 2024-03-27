@@ -1,7 +1,7 @@
-import Controller from '../Controller/Controller'
-import HttpObservabilityMiddleware from '../Observability/HttpObservabilityMiddleware'
-import HttpMiddleware from './HttpMiddleware'
-import HttpServer from './HttpServer'
+import Controller from '../../Controller/Controller'
+import HttpObservabilityMiddleware from '../../Observability/HttpObservabilityMiddleware'
+import HttpMiddleware from '../HttpMiddleware'
+import HttpServer from '../HttpServer'
 
 export default class HttpServerBuilder {
 

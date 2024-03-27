@@ -8,9 +8,8 @@ export default class PrometheusController implements Controller {
 
     register(server: HttpServer): void {
         server.registerRoute('get', '/metrics', async (request: HttpRequest<{}, {}>, response: HttpResponse) => {
-            response.set('Content-Type', Prometheus.register.contentType)
-            response.end(await Prometheus.register.metrics())
+            response.setHeader('Content-Type', Prometheus.register.contentType)
+            response.send(await Prometheus.register.metrics())
         })
     }
-
 }

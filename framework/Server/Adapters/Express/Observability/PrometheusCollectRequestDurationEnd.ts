@@ -1,12 +1,12 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express'
-import HttpMiddleware from '../../../HttpMiddleware'
+import { NextFunction, Request, Response } from 'express'
 import { httpRequestDurationMicroseconds } from '../../../../Observability/Prometheus/Metrics'
+import HttpObservabilityMiddleware from '../../../../Observability/HttpObservabilityMiddleware'
+import HttpServer from '../../../HttpServer'
 
-export default class PrometheusCollectRequestDurationEnd implements HttpMiddleware<RequestHandler> {
+export default class PrometheusCollectRequestDurationEnd implements HttpObservabilityMiddleware {
 
-    getMiddlewareFunction(): RequestHandler {
-        return (req: Request, res: Response, next: NextFunction) => {
-            console.log('oporra')
+    register(httpServer: HttpServer): void {
+        httpServer.registerMiddleware((req: Request, res: Response, next: NextFunction) => {
             const responseTimeInMs = Date.now() - res.locals.startEpoch
 
             httpRequestDurationMicroseconds
@@ -14,7 +14,7 @@ export default class PrometheusCollectRequestDurationEnd implements HttpMiddlewa
                 .observe(responseTimeInMs)
 
             next()
-        }
+        })
     }
 
 }

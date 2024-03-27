@@ -4,11 +4,11 @@ import ExpressHttpServerAdapter from './framework/Server/Adapters/Express/Expres
 import PrometheusCollectRequestDurationEnd from './framework/Server/Adapters/Express/Observability/PrometheusCollectRequestDurationEnd'
 import PrometheusCollectRequestDurationInit from './framework/Server/Adapters/Express/Observability/PrometheusCollectRequestDurationInit'
 
-
 const app = new ExpressHttpServerAdapter()
-app.registerMiddleware(new PrometheusCollectRequestDurationInit().getMiddlewareFunction())
+
+new PrometheusCollectRequestDurationInit().register(app)
 new ExampleController().register(app)
-app.registerMiddleware(new PrometheusCollectRequestDurationEnd().getMiddlewareFunction())
 new PrometheusController().register(app)
+new PrometheusCollectRequestDurationEnd().register(app)
 
 app.listen(3000)

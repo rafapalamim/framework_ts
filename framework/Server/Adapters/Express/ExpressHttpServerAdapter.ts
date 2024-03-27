@@ -17,7 +17,7 @@ export default class ExpressHttpServerAdapter implements HttpServer {
         this.app.use(middlewareFunction)
     }
 
-    addRoute(method: MethodType, url: string, callback: CallableFunction): void {
+    registerRoute(method: MethodType, url: string, callback: CallableFunction): void {
         this.app[method](url, (request: Request, response: Response, next: NextFunction) => callback(
             new ExpressRequestAdapter(request),
             new ExpressResponseAdapter(response),
@@ -33,7 +33,7 @@ export default class ExpressHttpServerAdapter implements HttpServer {
 
         process.on('SIGTERM', () => {
             server.close((err: Error | undefined) => {
-                
+
                 if (err) {
                     console.error(err)
                     process.exit(1)

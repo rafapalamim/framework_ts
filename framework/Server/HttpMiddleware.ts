@@ -1,3 +1,5 @@
-export default interface HttpMiddleware<T> {
-    getMiddlewareFunction() : T
+import HttpServer from './HttpServer'
+
+export default interface HttpMiddleware {
+    register(httpServer: HttpServer): void
 }

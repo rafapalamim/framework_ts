@@ -1,14 +1,14 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express'
-import HttpMiddleware from '../../../HttpMiddleware'
+import { NextFunction, Request, Response } from 'express'
+import HttpServer from '../../../HttpServer'
+import HttpObservabilityMiddleware from '../../../../Observability/HttpObservabilityMiddleware'
 
-export default class PrometheusCollectRequestDurationInit implements HttpMiddleware<RequestHandler> {
+export default class PrometheusCollectRequestDurationInit implements HttpObservabilityMiddleware {
 
-    getMiddlewareFunction(): RequestHandler {
-        return (req: Request, res: Response, next: NextFunction) => {
-            console.log('oporrinha')
+    register(httpServer: HttpServer): void {
+        httpServer.registerMiddleware((req: Request, res: Response, next: NextFunction) => {
             res.locals.startEpoch = Date.now()
             next()
-        }
+        })
     }
 
 }

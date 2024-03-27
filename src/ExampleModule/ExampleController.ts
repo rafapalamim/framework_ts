@@ -2,6 +2,7 @@ import Controller from '../../@framework/Controller/Controller'
 import HttpRequest from '../../@framework/Server/HttpRequest'
 import HttpResponse from '../../@framework/Server/HttpResponse'
 import HttpServer from '../../@framework/Server/HttpServer'
+import InfrastructureError from '../../@framework/Error/InfrastructureError'
 import HttpNextFunction from '../Server/HttpNextFunction'
 
 export default class ExampleController implements Controller {
@@ -10,6 +11,12 @@ export default class ExampleController implements Controller {
         server.registerRoute('get', '/test', async (request: HttpRequest<{}, {}>, response: HttpResponse, next: HttpNextFunction) => {
             const output = await Promise.resolve(1)
             response.setStatusCode(200).send({ hello: 'true', promise: output, request: request.body })
+            next.call()
+        })
+
+
+        server.registerRoute('get', '/error', async (request: HttpRequest<{}, {}>, response: HttpResponse, next: HttpNextFunction) => {
+            throw new InfrastructureError('Infra error', 500)
             next.call()
         })
 

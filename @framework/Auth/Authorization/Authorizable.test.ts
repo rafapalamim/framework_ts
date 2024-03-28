@@ -4,17 +4,17 @@ import Role from './Role'
 import Module from './Module'
 import Authorizable from './Authorizable'
 
+type MockCurrentUserData = {
+    id: string | number,
+    name: string,
+    email: string
+}
+
+class MockCurrentUser extends Authorizable<MockCurrentUserData> { }
+
+const userData = { id: 1, name: 'John Doe', email: 'johndoe@mail.com' }
+
 describe('Authorizable unit test', () => {
-
-    type MockCurrentUserData = {
-        id: string | number,
-        name: string,
-        email: string
-    }
-
-    class MockCurrentUser extends Authorizable<MockCurrentUserData> { }
-
-    const userData = { id: 1, name: 'John Doe', email: 'johndoe@mail.com' }
 
     test('Should be able to validate the current user data', () => {
 

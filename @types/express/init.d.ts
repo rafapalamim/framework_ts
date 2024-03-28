@@ -1,11 +1,11 @@
 import Authorizable from '../../@framework/Auth/Authorization/Authorizable'
-import { CurrentUserData } from '../../src/@Config/Auth/CurrentUserData'
+import { CurrentUserFields } from '../../src/@Config/Auth/CurrentUserFields'
 
 declare global {
     namespace Express {
         interface Request {
             startedAtInMs: number,
-            currentUser: Authorizable<CurrentUserData>
+            currentUser: Authorizable<CurrentUserFields>
         }
     }
 }

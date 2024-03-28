@@ -1,23 +1,33 @@
 import { describe, test, expect } from '@jest/globals'
-import Action from './Authorization/Action'
-import Module from './Authorization/Module'
-import Role from './Authorization/Role'
-import CurrentUser from './CurrentUser'
+import Action from './Action'
+import Role from './Role'
+import Module from './Module'
+import Authorizable from './Authorizable'
 
-describe('CurrentUser unit test', () => {
+describe('Authorizable unit test', () => {
+
+    type MockCurrentUserData = {
+        id: string | number,
+        name: string,
+        email: string
+    }
+
+    class MockCurrentUser extends Authorizable<MockCurrentUserData> { }
+
+    const userData = { id: 1, name: 'John Doe', email: 'johndoe@mail.com' }
 
     test('Should be able to validate the current user data', () => {
 
-        const user = new CurrentUser({id: 1, name: 'John Doe', email: 'johndoe@mail.com'}, [])
-        expect(user.data.id).toBe(1)
-        expect(user.data.name).toBe('John Doe')
-        expect(user.data.email).toBe('johndoe@mail.com')
+        const user = new MockCurrentUser(userData, [])
+        expect(user.data.id).toBe(userData.id)
+        expect(user.data.name).toBe(userData.name)
+        expect(user.data.email).toBe(userData.email)
 
     })
 
     test('Should not be able to validate the current user withour roles permissions', () => {
 
-        const user = new CurrentUser({id: 1, name: 'John Doe', email: 'johndoe@mail.com'}, [])
+        const user = new MockCurrentUser(userData, [])
 
         expect(() => user.canExecuteActionOnModule('action2', 'module1')).toThrowError('User cannot access the \'module1\' module')
         expect(() => user.canExecuteActionOnModule('action1', 'module2')).toThrowError('User cannot access the \'module2\' module')
@@ -34,7 +44,7 @@ describe('CurrentUser unit test', () => {
 
         const role = new Role(1, 'role1', [module1, module2])
 
-        const user = new CurrentUser({id: 1, name: 'John Doe', email: 'johndoe@mail.com'}, [role])
+        const user = new MockCurrentUser(userData, [role])
 
         expect(() => user.canExecuteActionOnModule('action1', 'module1')).not.toThrowError()
         expect(() => user.canExecuteActionOnModule('action2', 'module2')).not.toThrowError()
@@ -57,7 +67,7 @@ describe('CurrentUser unit test', () => {
         const role1 = new Role(1, 'role1', [module1])
         const role2 = new Role(2, 'role2', [module2])
 
-        const user = new CurrentUser({id: 1, name: 'John Doe', email: 'johndoe@mail.com'}, [role1, role2])
+        const user = new MockCurrentUser(userData, [role1, role2])
 
         expect(() => user.canExecuteActionOnModule('action1', 'module1')).not.toThrowError()
         expect(() => user.canExecuteActionOnModule('action2', 'module1')).not.toThrowError()
@@ -81,7 +91,7 @@ describe('CurrentUser unit test', () => {
         const role1 = new Role(1, 'role1', [module1, module2])
         const role2 = new Role(2, 'role2', [module1, module2])
 
-        const user = new CurrentUser({id: 1, name: 'John Doe', email: 'johndoe@mail.com'}, [role1, role2])
+        const user = new MockCurrentUser(userData, [role1, role2])
 
         expect(() => user.canExecuteActionOnModule('action1', 'module1')).toThrowError('User cannot execute the \'action1\' on \'module1\' module')
         expect(() => user.canExecuteActionOnModule('action2', 'module1')).toThrowError('User cannot execute the \'action2\' on \'module1\' module')
@@ -92,5 +102,6 @@ describe('CurrentUser unit test', () => {
         expect(() => user.canExecuteActionOnModule('action3', 'module2')).not.toThrowError()
 
     })
+
 
 })

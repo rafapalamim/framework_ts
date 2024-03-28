@@ -1,3 +1,9 @@
-export default class CurrentUser {
-    constructor(readonly id: string, readonly name: string, readonly email: string, readonly permissions: unknown) { }
+import Authorizable from './Authorization/Authorizable'
+
+export type CurrentUserData = {
+    id: number | string,
+    name: string,
+    email: string,
 }
+
+export default class CurrentUser extends Authorizable<CurrentUserData> { }

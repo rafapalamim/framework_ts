@@ -1,7 +1,7 @@
 import { describe, test, expect } from '@jest/globals'
 import Authenticatable from './Authenticatable'
 import AuthenticationRepository from '../../Persistence/Repository/AuthenticationRepository'
-import { CurrentUserFields } from '../../@Config/Auth/CurrentUserFields'
+import { CurrentUserFields } from '../../AuthModule/@Config/CurrentUserFields'
 import AuthenticationError from '../../Error/AuthenticationError'
 
 type MockAuthenticationUserFields = {
@@ -12,7 +12,11 @@ type MockAuthenticationUserFields = {
 class MockAuthentication extends Authenticatable<MockAuthenticationUserFields> {
 
     async login(data: MockAuthenticationUserFields): Promise<CurrentUserFields> {
-        return await this.authRepository.makeLogin(data)
+        const result = await this.authRepository.makeLogin(data)
+
+        if(!result) throw new Error('User not found')
+
+        return result
     }
 }
 
